@@ -1,0 +1,48 @@
+WEB Sun Jan 19, 2025
+
+messing with quines and self-reps these days
+
+http://www.nyx.net/~gthompso/quine.htm
+
+http://www.madore.org/~david/computers/quine.html
+
+created `q-error.scm` in `faster-miniKanren`, starting from the simple Quine-generating interpreter, but adding explicit errors.
+
+goal is to experiment with Kimian self-reps: http://www.nyx.net/~gthompso/self_kim.txt:
+
+"Kimian self-rep, like quines, got it's name from Godel Escher Bach.  A
+Kimian 'program' is actually the error produced by the system when it
+encounters the code.  Kimian self reps are therefore very system-specific,
+and even implementation specific."
+
+
+I want to add error handling to the interp so I can generate an input expression that is the same as the error produced
+
+
+definitely needs to be debugged:
+
+
+;; interesting -- I may need to go to the non-empty initial env to make this work.
+> (run* (q) (evalo '(quote cat) q))
+((value cat) (error (unbound-variable quote)))
+
+> (load "q-error.scm")
+> (time (run 1 (q) (evalo q q)))
+(time (run 1 ...))
+    no collections
+    0.000163625s elapsed cpu time
+    0.000156000s elapsed real time
+    37024 bytes allocated
+((error (unbound-variable error)))
+
+;; hmm -- looks like an error in the code for sure
+> (time (run* (q) (evalo '((lambda (_.0) (list _.0 (list 'quote _.0)))
+                            '(lambda (_.0) (list _.0 (list 'quote _.0))))
+                          q)))
+(time (run* (q) ...))
+    no collections
+    0.000068334s elapsed cpu time
+    0.000069000s elapsed real time
+    23984 bytes allocated
+((error (unbound-variable quote)))
+

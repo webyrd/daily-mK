@@ -1,0 +1,25 @@
+WEB Wed Jan 22, 2025
+
+(contining from Tues Jan 21)
+
+messing with quines and self-reps these days
+
+http://www.nyx.net/~gthompso/quine.htm
+
+http://www.madore.org/~david/computers/quine.html
+
+debug `q-error.scm` in `faster-miniKanren`
+
+goal is to experiment with Kimian self-reps: http://www.nyx.net/~gthompso/self_kim.txt:
+
+"Kimian self-rep, like quines, got it's name from Godel Escher Bach.  A
+Kimian 'program' is actually the error produced by the system when it
+encounters the code.  Kimian self reps are therefore very system-specific,
+and even implementation specific."
+
+
+After a helpful discussion with Greg Rosenblatt, I agree that adding lambda and quote to the initial env could make the code cleaner.  Also, consider combining some of the code for app and prim-app, to simplify code and remove duplicate error messages.
+
+Also need to make sure that the standard Quine is compatible with the new interp, and try to reorder the clauses/simplify so that I can generate the standard Quine.
+
+And make sure duplicate errors are no longer produced.
